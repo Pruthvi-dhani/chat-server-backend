@@ -2,32 +2,32 @@ package org.chatapp.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SourceType;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.chatapp.enums.GroupTypeEnum;
+import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
 @Getter
 @Setter
-public class UserModel {
+@Table(name = "group_chats")
+public class GroupModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(length = 100, nullable = false, unique = true)
-    private String username;
+    @Column(name = "group_name", length = 100)
+    private String groupName;
 
-    @Column(name = "display_name",length = 256, nullable = false)
-    private String displayName;
-
-    @Column(length = 256)
-    private String email;
+    @Column(name = "group_type", columnDefinition = "ENUM('private_conv', 'group_conv') NOT NULL DEFAULT 'private_conv'"
+    )
+    @Enumerated(EnumType.STRING)
+    private GroupTypeEnum groupType;
 
     @Column(name = "is_deleted", nullable = false, columnDefinition = "TINYINT DEFAULT 0")
     private Boolean isDeleted;
@@ -42,8 +42,6 @@ public class UserModel {
     @UpdateTimestamp(source = SourceType.DB)
     private LocalDateTime updatedTime;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private List<ConversationModel> conversations;
-
+    @OneToMany(mappedBy = "groupModel", fetch = FetchType.EAGER)
+    private List<MessageModel> messages = new ArrayList<>();
 }

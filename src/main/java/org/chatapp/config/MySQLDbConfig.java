@@ -1,6 +1,11 @@
 package org.chatapp.config;
 
+import org.chatapp.dao.GroupRepository;
+import org.chatapp.dao.MessageRepository;
 import org.chatapp.dao.UserRepository;
+import org.chatapp.model.ConversationModel;
+import org.chatapp.model.GroupModel;
+import org.chatapp.model.MessageModel;
 import org.chatapp.model.UserModel;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
@@ -19,6 +24,11 @@ public class MySQLDbConfig {
                 .setProperty(AvailableSettings.JAKARTA_JDBC_PASSWORD, System.getenv("DB_PASSWORD"))
                 .addAnnotatedClass(UserModel.class)
                 .addAnnotatedClass(UserRepository.class)
+                .addAnnotatedClass(GroupModel.class)
+                .addAnnotatedClass(GroupRepository.class)
+                .addAnnotatedClass(ConversationModel.class)
+                .addAnnotatedClass(MessageModel.class)
+                .addAnnotatedClass(MessageRepository.class)
                 .buildSessionFactory();
     }
 }

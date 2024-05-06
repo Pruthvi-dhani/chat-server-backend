@@ -55,6 +55,6 @@ CREATE TABLE `chat_app`.`messages` (
   INDEX `conv_id_fk_idx_idx` (`group_id` ASC) VISIBLE,
   CONSTRAINT `conv_id_fk_idx`
     FOREIGN KEY (`group_id`)
-    REFERENCES `chat_app`.`conversations` (`id`)
+    REFERENCES `chat_app`.`conversations` (`group_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
